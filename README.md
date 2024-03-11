@@ -1,29 +1,34 @@
-# Moonton-Account-Checker
-Moonton Account Checker using python3
+# 🌟 Moonton Account Checker 🌟
 
-# Moonton Account Checker
+Moonton Account Checker using Python 3
 
-Program ini adalah alat untuk memeriksa keberhasilan login akun Moonton Mobile Legends menggunakan daftar email dan password yang diberikan.
+## ℹ️ About
 
-## 🚀 Cara Menggunakan
+This program is a tool to check the login success of Moonton Mobile Legends accounts using the provided list of email and password combinations.
 
-1. Pastikan kamu memiliki Python 3 yang terinstal di komputer kamu. Jika belum, kamu bisa mengunduh dan menginstalnya dari [situs resmi Python](https://www.python.org/downloads/).
+## 🚀 How to Use
 
-2. Siapkan daftar email dan password dalam format `email:password` atau `email|password`. Simpan daftar tersebut dalam sebuah file teks, contoh: `list.txt`.
+1. Make sure you have Python 3 installed on your computer. If not, you can download and install it from the [official Python website](https://www.python.org/downloads/).
 
-3. Pastikan file `list.txt` berada dalam direktori yang sama dengan file `main.py`.
+2. Prepare a list of email and password combinations in the format `email:password` or `email|password`. Save the list in a text file, for example: `list.txt`.
 
-4. Buka terminal atau command prompt, lalu arahkan ke direktori tempat file `main.py` berada.
+3. Ensure that the `list.txt` file is in the same directory as the `main.py` file.
 
-5. Jalankan program dengan menjalankan perintah berikut di terminal atau command prompt:
+4. Open a terminal or command prompt, then navigate to the directory where the `main.py` file is located.
+
+5. Run the program by executing the following command in the terminal or command prompt:
     ```
     python main.py
     ```
 
-6. Program akan meminta kamu untuk memasukkan nama file yang berisi daftar email dan password (contoh: `list.txt`). Masukkan nama file tersebut dan tekan Enter.
+6. The program will prompt you to enter the name of the file containing the list of email and password combinations (e.g., `list.txt`). Enter the file name and press Enter.
 
-7. Program akan mulai memeriksa setiap akun dalam daftar. Setelah selesai, program akan menampilkan jumlah akun yang berhasil dan gagal login, serta menyimpan hasilnya dalam file `live.txt` (akun berhasil) dan `die.txt` (akun gagal).
+7. The program will start checking each account in the list. After completion, it will display the number of accounts that successfully logged in and failed to log in, and save the results in the `live.txt` (successful accounts) and `die.txt` (failed accounts) files.
 
-8. Selesai! Kamu dapat membuka file `live.txt` untuk melihat akun yang berhasil login, dan `die.txt` untuk melihat akun yang gagal login.
+8. That's it! You can open the `live.txt` file to view the accounts that successfully logged in, and `die.txt` to view the accounts that failed to log in.
 
-Selamat mencoba! 🎮🔍
+📱 **Using with Termux:** If you're using Termux on Android, make sure to install Python by running `pkg install python`, then follow the same instructions as above.
+
+🌟 **Support Development:** If you enjoy using this program and would like to support further development, consider making a donation to the developer.
+
+Thank you for using Moonton Account Checker! 🎮🔍

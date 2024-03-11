@@ -19,7 +19,7 @@ class MOONTON:
         self.loading_index = 0
 
     def loading_animation(self):
-        sys.stdout.write('\r[+] Memeriksa akun ' + self.loading_symbols[self.loading_index % 4])
+        sys.stdout.write('\r\033[92m[+] Memeriksa akun\033[0m ' + self.loading_symbols[self.loading_index % 4])
         sys.stdout.flush()
         self.loading_index += 1
         time.sleep(0.1)

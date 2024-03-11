@@ -18,7 +18,7 @@ This program is a tool to check the login success of Moonton Mobile Legends acco
 
 5. Run the program by executing the following command in the terminal or command prompt:
     ```
-    python main.py
+    python3 main.py
     ```
 
 6. The program will prompt you to enter the name of the file containing the list of email and password combinations (e.g., `list.txt`). Enter the file name and press Enter.

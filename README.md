@@ -18,14 +18,19 @@ This program is a tool to check the login success of Moonton Mobile Legends acco
 
 5. Run the program by executing the following command in the terminal or command prompt:
     ```
-    python main.py
+    python3 main.py
     ```
+    or if you want a more informative display
+    ```
+    python3 start.py
+    ```
+   
 
-6. The program will prompt you to enter the name of the file containing the list of email and password combinations (e.g., `list.txt`). Enter the file name and press Enter.
+7. The program will prompt you to enter the name of the file containing the list of email and password combinations (e.g., `list.txt`). Enter the file name and press Enter.
 
-7. The program will start checking each account in the list. After completion, it will display the number of accounts that successfully logged in and failed to log in, and save the results in the `live.txt` (successful accounts) and `die.txt` (failed accounts) files.
+8. The program will start checking each account in the list. After completion, it will display the number of accounts that successfully logged in and failed to log in, and save the results in the `live.txt` (successful accounts) and `die.txt` (failed accounts) files.
 
-8. That's it! You can open the `live.txt` file to view the accounts that successfully logged in, and `die.txt` to view the accounts that failed to log in.
+9. That's it! You can open the `live.txt` file to view the accounts that successfully logged in, and `die.txt` to view the accounts that failed to log in.
 
 📱 **Using with Termux:** If you're using Termux on Android, make sure to install Python by running `pkg install python`, then follow the same instructions as above.
 

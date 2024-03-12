@@ -20,7 +20,7 @@ This program is a tool to check the login success of Moonton Mobile Legends acco
     ```
     python3 main.py
     ```
-    or if you want a more informative display
+    or if you want a more informative display(still developing)
     ```
     python3 start.py
     ```

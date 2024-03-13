@@ -17,7 +17,16 @@ class MOONTON:
         self.api = 'https://accountmtapi.mobilelegends.com/'
         print('''\033[92m
 
-\n''')
+EEEEEEEEEEEE    XXXXXX      XXXXXX          CCCCCCCCCCCC     HHHHH     HHHHH      EEEEEEEEEEEE      DDDDDDDDDD
+EEEEEEEEEEEE     XXXXXX    XXXXXX         CCCCCCCCCCCC       HHHHH     HHHHH      EEEEEEEEEEEE      DDDDDDDDDDDD
+EEEEE             XXXXXX  XXXXXX        CCCCC                HHHHH     HHHHH      EEEEE             DDDDD   DDDDD
+EEEEE              XXXXXXXXXXXX        CCCCC                 HHHHH     HHHHH      EEEEE             DDDDD    DDDDD
+EEEEEEEEE           XXXXXXXXXX        CCCCC                  HHHHHHHHHHHHHHH      EEEEEEEEE         DDDDD     DDDDD
+EEEEEEEEE           XXXXXXXXXX        CCCCC                  HHHHHHHHHHHHHHH      EEEEEEEEE         DDDDD     DDDDD
+EEEEE              XXXXXXXXXXXX        CCCCC                 HHHHH     HHHHH      EEEEE             DDDDD    DDDDD
+EEEEE             XXXXXX  XXXXXX        CCCCC                HHHHH     HHHHH      EEEEE             DDDDD   DDDDD
+EEEEEEEEEEEE     XXXXXX    XXXXXX         CCCCCCCCCCCC       HHHHH     HHHHH      EEEEEEEEEEEE      DDDDDDDDDDDD
+EEEEEEEEEEEE    XXXXXX      XXXXXX          CCCCCCCCCCCC     HHHHH     HHHHH      EEEEEEEEEEEE      DDDDDDDDDD\n''')
 
     def main(self):
         print('[!] Pemisah email:password atau email|password\n')

